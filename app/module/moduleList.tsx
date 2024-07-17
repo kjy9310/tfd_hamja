@@ -5,10 +5,17 @@ import React from 'react';
 
 import { Module, ModuleStat } from '../interfaces/module'
 import ModuleComponent from '../components/module'
-import {Background} from '../constants'
-import {getIconImage} from '../util'
 
-export default function ModuleList(props:{moduleData:Module[]}) {
+
+export default function ModuleList(props:{moduleData:Module[], constants:any}) {
+  const {IconPath, IconName, Background} = props.constants
+  const getIconImage = (name:string) : string=>{
+    const iName = IconName[name]
+  
+    return iName?`${IconPath}/${iName}.png`:''
+  }
+  
+
   const [searchText,setSearchText] = useState('')
   const [searchTypeSocket,setSearchTypeSocket] = useState('all')
   const [searchTypeWeapon,setSearchTypeWeapon] = useState('all')
@@ -30,7 +37,7 @@ export default function ModuleList(props:{moduleData:Module[]}) {
     }))
   },[searchText, searchTypeSocket, searchTypeWeapon])
     return <>
-      <div>
+      <div className="mb-6">
         <select className='bg-black text-lg border radius-xl' onChange={(e)=>setSearchTypeWeapon(e.target.value)}>
           <option value="all"> 종류전체 </option>
           <option value="계승자">계승자</option>
@@ -61,7 +68,7 @@ export default function ModuleList(props:{moduleData:Module[]}) {
       <div className="w-full">
           {
             data.map((module:Module)=>{
-              return <ModuleComponent moduleInfo={module} key={module.module_id}/>
+              return <ModuleComponent moduleInfo={module} key={module.module_id} constants={props.constants}/>
             })
           }
       </div>

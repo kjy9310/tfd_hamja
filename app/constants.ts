@@ -19,3 +19,5 @@ export const Background:{ [key: string]: string} = {
   '궁극':'linear-gradient(135deg, rgba(200,200,0,1) 0%, rgba(0,0,0,1) 35%, rgba(200,200,0,1) 100%)',
   '초월':'linear-gradient(135deg, rgba(200,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(200,0,0,1) 100%)',
 } as const
+
+export default {IconPath, IconName, Background}

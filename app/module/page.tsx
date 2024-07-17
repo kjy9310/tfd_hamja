@@ -1,8 +1,8 @@
 // https://open.api.nexon.com/static/tfd/meta/ko/module.json
 import React from 'react';
-
-import { Module, ModuleStat } from '../interfaces/module'
 import ModuleList from './moduleList'
+import constants from '../constants'
+
 async function getModules(languageCode:string = 'ko') {
   try{
     const res = await fetch(`https://open.api.nexon.com/static/tfd/meta/${languageCode}/module.json`, { next: { revalidate: 60 } }); //60 min cache
@@ -22,7 +22,7 @@ export default async function ModulePage() {
     return <>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
-          <ModuleList moduleData={moduleData}/>
+          <ModuleList moduleData={moduleData} constants={constants}/>
         </div>
       </main>
     </>;

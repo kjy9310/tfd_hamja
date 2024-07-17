@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Module } from '../interfaces/module'
-import {Background} from '../constants'
-import {getIconImage} from '../util'
+// import {Background} from '../constants'
+// import {getIconImage} from '../util'
 
 
 const LevelGauge = (props:{level:number}) =>{
@@ -10,7 +10,15 @@ const LevelGauge = (props:{level:number}) =>{
   </div>
 }
 
-export default function ModuleComponent(props: {moduleInfo: Module}) {
+export default function ModuleComponent(props: {moduleInfo: Module, constants:any}) {
+  const {IconPath, IconName, Background} = props.constants
+  const getIconImage = (name:string) : string=>{
+    const iName = IconName[name]
+  
+    return iName?`${IconPath}/${iName}.png`:''
+  }
+  
+
   const [level, setLevel] = useState(0)
   const {module_name, module_id, image_url, module_type, module_tier, module_socket_type, module_class, module_stat} = props.moduleInfo
   const currentStat = module_stat.find((stat)=>stat.level===level)
@@ -37,7 +45,7 @@ export default function ModuleComponent(props: {moduleInfo: Module}) {
               <div><button className="mt-6 text-6xl" onClick={()=>setLevel(level<maxLevel?level+1:maxLevel)}>+</button></div>
             </div>
             <div className='text-xl'>{module_name}</div>
-            <div>{currentDetail}</div>
+            <div style={{overflowY:"scroll"}}>{currentDetail}</div>
           </div>
   }
   
