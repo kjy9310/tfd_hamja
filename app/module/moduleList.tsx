@@ -33,9 +33,9 @@ export default function ModuleList(props:{moduleData:Module[], constants:any}) {
 
 
     setData(searchTierRes.filter((moduleDatum)=>{
-      return moduleDatum.module_name.includes(searchText) || moduleDatum.module_stat[0].value.includes(searchText)
+      return moduleDatum.module_name.includes(searchText) || moduleDatum.module_stat[0].value.includes(searchText) || moduleDatum.module_type?.includes(searchText)
     }))
-  },[searchText, searchTypeSocket, searchTypeWeapon])
+  },[searchText, searchTypeSocket, searchTypeWeapon, searchTypeTier])
     return <>
       <div className="mb-6">
         <select className='bg-black text-lg border radius-xl' onChange={(e)=>setSearchTypeWeapon(e.target.value)}>
