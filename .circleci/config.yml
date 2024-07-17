@@ -1,0 +1,39 @@
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-ecs: circleci/aws-ecs@3.2
+
+jobs:
+  aws-ecr:
+    docker:
+      - image: cimg/node:20.5
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - aws-ecr/build-and-push-image:
+          dockerfile: Dockerfile
+          repo: tfd_hamja
+          tag: latest 
+
+workflows:
+  build-and-push-to-ecr:
+    jobs:
+      - aws-ecr:
+          context:
+            - aws-deploy
+          filters:
+            branches:
+              only:
+                - dev
+      - aws-ecs/deploy-service-update:
+          context:
+            - aws-deploy
+          requires:
+            - aws-ecr
+          family: 'tfd_hamja'
+          cluster: 'tfd'
+          filters:
+            branches:
+              only:
+                - dev
